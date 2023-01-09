@@ -1,0 +1,46 @@
+body{
+    background-color: #f4e1d2;
+    text-align: center;
+}
+
+h1{
+    color: #792d6d;
+}
+
+.mytable{
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+}
+tr{
+   background-color:rgb(245, 226, 240);
+}
+.tr1{
+    background-color:rgb(214, 184, 206);
+ }
+.hr{
+        border-top: 2px dashed rgb(136, 30, 136);
+      }
+
+.div1{
+    background-color: rgb(245, 226, 240);
+    height: 150px;
+    width: 350px;
+    margin: auto;
+    padding-left: 20px;
+}
+
+.div2{
+    background-color: rgb(245, 226, 240);
+    height: 200px;
+    width: 350px;
+    margin: auto;
+    padding-left: 20px;
+}
+.div3{
+    background-color: rgb(245, 226, 240);
+    height: 110px;
+    width: 350px;
+    margin: auto;
+    padding-left: 20px;
+}

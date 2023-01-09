@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>HELLO EXPRESS</title>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+
+<body>
+    <h1>GET</h1>
+    <button onclick="run_me()" class="w3-button w3-purple"> GET ALL</button><br>
+    <table border=2 class="mytable">
+        <thead>
+            <tr class="tr1">
+                <th>id</th>
+                <th>updatedat</th>
+                <th>name</th>
+                <th>date</th>
+                <th>courseid</th>
+            </tr>
+        </thead>
+        <tbody id="data">
+        </tbody>
+    </table>
+    <hr class="hr">
+    <div class="div1">
+        <h1>INSERT</h1>
+        <p>name : <input type="text" id="txt_name"></p>
+        <p>courseid : <input type="number" id="txt_courseid"></p>
+    </div>
+    <p><button onclick="add()" class="w3-button w3-purple">INSERT</button></p><br>
+    <hr class="hr">
+    <div class="div2">
+        <h1>UPDATE</h1>
+        <p>id : <input type="number" id="id"></p>
+        <p>name : <input type="text" id="name"></p>
+        <p>courseid : <input type="number" id="courseid"></p>
+    </div>
+    <p><button onclick="update()" class="w3-button w3-purple">UPDATE</button></p><br>
+    <hr class="hr">
+    <div class="div3">
+        <h1>DELETE</h1>
+        <p>id : <input type="number" id="txtId"></p>
+    </div>
+    <p><button onclick="deleted()" class="w3-button w3-purple">DELETE</button></p><br>
+    <hr class="hr">
+    <div class="div2">
+        <h1>PATCH</h1>
+        <p>id : <input type="number" id="id1"></p>
+        <p>name : <input type="text" id="name1"></p>
+        <p>courseid : <input type="number" id="courseid1"></p>
+    </div>
+    <p><button onclick="update_patch()" class="w3-button w3-purple">PATCH</button></p><br>
+
+    <script>
+        //to get all
+        function run_me() {
+            fetch('/test').then(response => response.json()).
+                then(json => {
+                    console.log(json.employees);
+                    let tb = ""
+                    json.employees.forEach(e => {
+                        tb += `<tr class="tr"><td>${e.id}</td>
+                        <td>${e.updatedat}</td>
+                        <td>${e.name}</td>
+                        <td id="date1">${e.date}</td>
+                        <td>${e.courseid}</td></tr>`
+                    });
+                    document.getElementById('data').innerHTML = tb
+                })
+        }
+
+        let d = new Date();
+        function creatDate() {
+            return d.toLocaleString();
+        }
+        //to insert 
+        function add() {
+            fetch('/test', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                },
+                // take from inputs 
+                body: JSON.stringify({
+                    updatedat: `${creatDate()}`,
+                    name: `${$('#txt_name').val()}`,
+                    date: `${creatDate()}`,
+                    courseid: `${$('#txt_courseid').val()}`
+                })
+            })
+                .then(json => {
+                    console.log(json);
+                    run_me();
+                });
+        }
+
+
+        //to update 
+        function update(id) {
+            id = $('#id').val()
+            fetch(`/test/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                },
+                // take from inputs 
+                body: JSON.stringify({
+                    updatedat: `${creatDate()}`,
+                    name: `${$('#name').val()}`,
+                    courseid: `${$('#courseid').val()}`
+                })
+            })
+                .then(json => {
+                    console.log(json);
+                    run_me();
+                });
+        }
+
+        //to delete
+        function deleted(id) {
+            id = $('#txtId').val()
+            fetch(`/test/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                }
+            })
+                .then(json => {
+                    console.log(json);
+                    run_me();
+                });
+        }   
+        
+        //to patch 
+        function update_patch(id) {
+            id = $('#id1').val()
+            fetch(`/test/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                },
+                // take from inputs 
+                body: JSON.stringify({
+                    updatedat: `${creatDate()}`,
+                    name: `${$('#name1').val()}`,
+                    courseid: `${$('#courseid1').val()}`
+                })
+            })
+                .then(json => {
+                    console.log(json);
+                    run_me();
+                });
+        }
+    </script>
+</body>
+
+</html>
